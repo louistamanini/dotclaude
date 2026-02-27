@@ -54,22 +54,18 @@ My [Claude Code](https://claude.com/code) configuration — agents, skills, hook
 
 ## Setup
 
-Clone directly into `~/.claude/`:
+> **Warning**: `~/.claude/` is Claude Code's global config directory. Cloning this repo into it will **replace your existing settings, hooks, and CLAUDE.md**. Back up first if you have custom configuration.
 
 ```bash
-# Fresh machine (no existing ~/.claude/)
+# Back up existing config, then clone
+mv ~/.claude ~/.claude.bak
 git clone git@github.com:louistamanini/dotclaude.git ~/.claude
 
-# Existing ~/.claude/ — clone elsewhere and symlink
-git clone git@github.com:louistamanini/dotclaude.git ~/dotclaude
-ln -sf ~/dotclaude/agents ~/.claude/agents
-ln -sf ~/dotclaude/commands ~/.claude/commands
-ln -sf ~/dotclaude/hooks ~/.claude/hooks
-ln -sf ~/dotclaude/CLAUDE.md ~/.claude/CLAUDE.md
-# Review settings.json manually to merge with existing
+# Merge your personal settings back
+# Compare ~/.claude.bak/settings.json with the new one and merge as needed
 
-# Update to latest version
-cd ~/dotclaude && git pull
+# Update
+cd ~/.claude && git pull
 ```
 
 ## Design principles
