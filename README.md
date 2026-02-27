@@ -37,6 +37,8 @@ My [Claude Code](https://claude.com/code) configuration — agents, skills, hook
 
 | Command | Description |
 |---|---|
+| `/feature` | Full feature workflow: clarify → plan (+ optional architect analysis) → implement → review → tests → Playwright → commit → optional Linear issue |
+| `/feature-linear` | Same as `/feature` but starts from an existing Linear issue and updates it to Done at the end |
 | `/commit` | Follows the project's existing commit style |
 | `/review` | Adversarial code review → fix loop → re-review |
 | `/g-audit-feature` | Playwright E2E test → UX audit report → Linear issues |
