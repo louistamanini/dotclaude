@@ -1,0 +1,41 @@
+# Credentials & secrets
+.credentials.json
+settings.local.json
+security_warnings_state_*.json
+
+# Cache & runtime
+cache/
+chrome/
+debug/
+downloads/
+file-history/
+paste-cache/
+session-env/
+shell-snapshots/
+telemetry/
+statsig/
+stats-cache.json
+mcp-needs-auth-cache.json
+
+# History & todos
+history.jsonl
+todos/
+
+# IDE integration
+ide/
+
+# Plans (session-specific)
+plans/
+
+# Projects memory (machine-specific)
+projects/
+
+# Plugins (installed via marketplace, not portable)
+plugins/
+
+# Teams & tasks (session-specific)
+teams/
+tasks/
+
+# Backups
+backups/
