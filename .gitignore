@@ -1,5 +1,6 @@
 # Credentials & secrets
 .credentials.json
+settings.json
 settings.local.json
 security_warnings_state_*.json
 
