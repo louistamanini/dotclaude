@@ -47,12 +47,7 @@ Execute the approved plan step by step, following existing conventions (naming, 
 
 ### Step 5 — Review
 
-Spawn the `reviewer` agent on all modified files. For each CRITICAL or IMPORTANT finding:
-- Present the issue and proposed fix to the user
-- Apply the fix with the user's agreement
-- Re-run the reviewer after all fixes
-
-Repeat the review loop until the agent returns SHIP IT.
+Read and follow `~/.claude/commands/review.md`. The scope is all files modified during this feature.
 
 ### Step 6 — Tests [CONDITIONAL]
 
@@ -68,11 +63,11 @@ After the code is solid, ask:
 
 > "Do you want a Playwright E2E audit on this feature?"
 
-If yes, apply the `/g-audit-feature` process with the feature flow as the test description.
+If yes, read and follow `~/.claude/commands/g-audit-feature.md` with the feature flow as the test description.
 
 ### Step 8 — Commit
 
-Apply the `/commit` process: read `git log --oneline -20` to detect the project's commit style, then commit all changes in a single commit following that style.
+Read and follow `~/.claude/commands/commit.md`.
 
 Include the Linear issue ID in the commit message if the project's commit style supports it (e.g. `feat: add X [FLO-42]` or `feat(FLO-42): add X`). If the style has no issue reference pattern, omit it.
 
