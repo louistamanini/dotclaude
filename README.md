@@ -66,17 +66,20 @@ git clone git@github.com:louistamanini/dotclaude.git ~/.claude
 
 ### Existing install
 
-> **Warning**: `git clone` requires `~/.claude` to be empty or absent. Moving it away also moves your login cache and history — copy them back after cloning.
+`~/.claude` already exists with credentials, cache, and history. No need to move anything — initialize git in place and pull the repo over it:
 
 ```bash
-mv ~/.claude ~/.claude.bak
-git clone git@github.com:louistamanini/dotclaude.git ~/.claude
-
-# Restore personal files
-cp ~/.claude.bak/.credentials.json ~/.claude/
-cp ~/.claude.bak/history.jsonl ~/.claude/          # optional
-cp -r ~/.claude.bak/projects/ ~/.claude/           # optional
+cd ~/.claude
+git init
+git remote add origin git@github.com:louistamanini/dotclaude.git
+git fetch origin
+git reset origin/main    # set index to main without touching existing files
+git checkout .           # restore tracked files from the repo
+git branch -M main       # rename branch to main
+git branch -u origin/main
 ```
+
+The `.gitignore` excludes all local files (`.credentials.json`, `settings.json`, `cache/`, `projects/`, etc.), so nothing is overwritten.
 
 ### Update
 
