@@ -1,4 +1,4 @@
-Implement a feature from A to Z: clarify, plan, implement, review, optionally test and Playwright-audit, commit, and optionally create a Linear issue. Argument: feature description.
+Implement a feature from A to Z: clarify, plan, implement, simplify, review, optionally test and Playwright-audit, commit, and optionally create a Linear issue. Argument: feature description.
 
 ## Process
 
@@ -43,11 +43,17 @@ Do not exit plan mode until the user explicitly approves the plan. If the user r
 
 Execute the approved plan step by step, following existing conventions (naming, structure, imports). If a step reveals unexpected complexity or a blocker, stop and inform the user before continuing.
 
-### Step 5 — Review
+### Step 5 — Simplify
+
+Spawn the `code-simplifier` agent on all files modified during this feature. The agent will refine the code for clarity, consistency, and maintainability while preserving exact functionality. Let it complete its full pass without interruption.
+
+This step is not optional — it runs on every feature to ensure the code going into review is already clean and readable.
+
+### Step 6 — Review
 
 Read and follow `~/.claude/commands/review.md`. The scope is all files modified during this feature.
 
-### Step 6 — Tests [CONDITIONAL]
+### Step 7 — Tests [CONDITIONAL]
 
 If the user requested tests in Step 2:
 - Detect the test runner (package.json scripts, Makefile, pytest, etc.) and run existing tests
@@ -55,7 +61,7 @@ If the user requested tests in Step 2:
 - If the feature has no test coverage, write tests for the core logic
 - Re-run to confirm all tests pass
 
-### Step 7 — Playwright audit [ask here]
+### Step 8 — Playwright audit [ask here]
 
 After the code is solid, ask:
 
@@ -63,19 +69,19 @@ After the code is solid, ask:
 
 If yes, read and follow `~/.claude/commands/g-audit-feature.md` with the feature flow as the test description.
 
-### Step 8 — Commit
+### Step 9 — Commit
 
 Read and follow `~/.claude/commands/commit.md`.
 
-### Step 9 — Linear issue [CONDITIONAL]
+### Step 10 — Linear issue [CONDITIONAL]
 
 If the user requested a Linear issue in Step 2, read and follow `~/.claude/commands/g-create-issue.md` using the feature description and implementation context as input.
 
 ## Rules
 
 - Never start implementing before the plan is approved (Step 3)
-- Never commit while review blockers remain unresolved (Step 5)
-- Never skip the review loop — it is not optional
+- Never commit while review blockers remain unresolved (Step 6)
+- Never skip the simplify or review steps — they are not optional
 - If tests are requested and fail, fix before committing — never commit with failing tests
 - At each conditional step, honour exactly what the user answered in Step 2 — do not re-ask
 

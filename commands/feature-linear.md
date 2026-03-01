@@ -1,4 +1,4 @@
-Implement a feature from A to Z starting from an existing Linear issue: fetch the spec, plan, implement, review, optionally test and Playwright-audit, commit, then update the Linear issue. Argument: Linear issue ID (e.g. FLO-42) or URL.
+Implement a feature from A to Z starting from an existing Linear issue: fetch the spec, plan, implement, simplify, review, optionally test and Playwright-audit, commit, then update the Linear issue. Argument: Linear issue ID (e.g. FLO-42) or URL.
 
 ## Process
 
@@ -45,11 +45,17 @@ Once the plan is approved, update the Linear issue status to **In Progress**.
 
 Execute the approved plan step by step, following existing conventions (naming, structure, imports). If a step reveals unexpected complexity or a blocker, stop and inform the user before continuing.
 
-### Step 5 — Review
+### Step 5 — Simplify
+
+Spawn the `code-simplifier` agent on all files modified during this feature. The agent will refine the code for clarity, consistency, and maintainability while preserving exact functionality. Let it complete its full pass without interruption.
+
+This step is not optional — it runs on every feature to ensure the code going into review is already clean and readable.
+
+### Step 6 — Review
 
 Read and follow `~/.claude/commands/review.md`. The scope is all files modified during this feature.
 
-### Step 6 — Tests [CONDITIONAL]
+### Step 7 — Tests [CONDITIONAL]
 
 If the user requested tests in Step 2:
 - Detect the test runner (package.json scripts, Makefile, pytest, etc.) and run existing tests
@@ -57,7 +63,7 @@ If the user requested tests in Step 2:
 - If the feature has no test coverage, write tests for the core logic
 - Re-run to confirm all tests pass
 
-### Step 7 — Playwright audit [ask here]
+### Step 8 — Playwright audit [ask here]
 
 After the code is solid, ask:
 
@@ -65,13 +71,13 @@ After the code is solid, ask:
 
 If yes, read and follow `~/.claude/commands/g-audit-feature.md` with the feature flow as the test description.
 
-### Step 8 — Commit
+### Step 9 — Commit
 
 Read and follow `~/.claude/commands/commit.md`.
 
 Include the Linear issue ID in the commit message if the project's commit style supports it (e.g. `feat: add X [FLO-42]` or `feat(FLO-42): add X`). If the style has no issue reference pattern, omit it.
 
-### Step 9 — Update the Linear issue
+### Step 10 — Update the Linear issue
 
 - Use Linear MCP `save_issue` to update the issue status to **Done** (or the equivalent closing status in the team's workflow)
 - Add a comment on the issue summarizing:
@@ -82,10 +88,10 @@ Include the Linear issue ID in the commit message if the project's commit style 
 ## Rules
 
 - Never start implementing before the plan is approved (Step 3)
-- Never commit while review blockers remain unresolved (Step 5)
-- Never skip the review loop — it is not optional
+- Never commit while review blockers remain unresolved (Step 6)
+- Never skip the simplify or review steps — they are not optional
 - If tests are requested and fail, fix before committing — never commit with failing tests
-- Always update the Linear issue at the end (Step 9) — this is not optional for this skill
+- Always update the Linear issue at the end (Step 10) — this is not optional for this skill
 - If the Linear issue cannot be fetched (wrong ID, permission error), stop and ask the user
 
 _Self-improvement and Execution discipline rules are defined in ~/.claude/CLAUDE.md and apply automatically._
