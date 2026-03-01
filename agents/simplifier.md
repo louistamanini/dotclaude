@@ -49,8 +49,8 @@ Analyze each modified file in this priority order:
 ### Step 3 — Apply changes
 
 - Apply simplifications one by one with Edit
-- After each group of changes in a file, run tests or build if available to verify nothing is broken
-- If a test fails, immediately revert the last change
+- After each group of changes in a file, read and follow `~/.claude/commands/verify.md` to verify nothing is broken
+- If a check fails, immediately revert the last change
 
 ### Step 4 — Report
 

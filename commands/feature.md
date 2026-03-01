@@ -53,13 +53,11 @@ This step is not optional — it runs on every feature to ensure the code going 
 
 Read and follow `~/.claude/commands/review.md`. The scope is all files modified during this feature.
 
-### Step 7 — Tests [CONDITIONAL]
+### Step 7 — Verify and test [CONDITIONAL]
 
 If the user requested tests in Step 2:
-- Detect the test runner (package.json scripts, Makefile, pytest, etc.) and run existing tests
-- If tests fail, fix them before continuing — do not leave broken tests
-- If the feature has no test coverage, write tests for the core logic
-- Re-run to confirm all tests pass
+- If the feature has no test coverage, write tests for the core logic first
+- Then read and follow `~/.claude/commands/verify.md` to run all available checks and fix failures
 
 ### Step 8 — Playwright audit [ask here]
 
