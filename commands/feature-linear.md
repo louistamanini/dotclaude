@@ -69,7 +69,7 @@ After the code is solid, ask:
 
 > "Do you want a Playwright E2E audit on this feature?"
 
-If yes, read and follow `~/.claude/commands/g-audit-feature.md` with the feature flow as the test description.
+If yes, read and follow `~/.claude/commands/audit-feature.md` with the feature flow as the test description.
 
 ### Step 9 — Commit
 

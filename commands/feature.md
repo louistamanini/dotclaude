@@ -67,7 +67,7 @@ After the code is solid, ask:
 
 > "Do you want a Playwright E2E audit on this feature?"
 
-If yes, read and follow `~/.claude/commands/g-audit-feature.md` with the feature flow as the test description.
+If yes, read and follow `~/.claude/commands/audit-feature.md` with the feature flow as the test description.
 
 ### Step 9 — Commit
 
@@ -75,7 +75,7 @@ Read and follow `~/.claude/commands/commit.md`.
 
 ### Step 10 — Linear issue [CONDITIONAL]
 
-If the user requested a Linear issue in Step 2, read and follow `~/.claude/commands/g-create-issue.md` using the feature description and implementation context as input.
+If the user requested a Linear issue in Step 2, read and follow `~/.claude/commands/create-issue.md` using the feature description and implementation context as input.
 
 ## Rules
 

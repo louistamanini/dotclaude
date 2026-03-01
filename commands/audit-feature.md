@@ -69,7 +69,7 @@ Present the report to the user and ask for validation before creating issues.
 ### Step 5 — Create Linear issues
 - For each finding validated by the user:
   - Explore the codebase to find relevant files (Grep/Glob/Read)
-  - Build the structured issue description (same format as g-create-issue):
+  - Build the structured issue description (same format as create-issue):
     - Problem, Context (with real file paths), Suggested solution, Questions
   - Detect the Linear team (list_teams, ask if multiple)
   - Find or create the appropriate label (Bug, UX, Improvement, Feature)
