@@ -16,9 +16,11 @@ My [Claude Code](https://claude.com/code) configuration — agents, skills, hook
 ├── commands/
 │   ├── commit.md          # Standardized commit workflow
 │   ├── review.md          # Code review orchestrating the reviewer agent
-│   ├── g-audit-feature.md # E2E Playwright testing → UX report → Linear issues
-│   ├── g-create-issue.md  # Structured Linear issue from a description
-│   └── g-generate-skill.md # Meta-skill: generate new skills from a session
+│   ├── verify.md          # Universal verification (lint, types, tests, build)
+│   ├── wrap-up.md         # End-of-session compound learning ritual
+│   ├── audit-feature.md   # E2E Playwright testing → UX report → Linear issues
+│   ├── create-issue.md    # Structured Linear issue from a description
+│   └── generate-skill.md  # Meta-skill: generate new skills from a session
 └── hooks/
     ├── guard-destructive.sh # PreToolUse: blocks dangerous commands
     └── auto-format.sh       # PostToolUse: auto-format after writes
@@ -37,13 +39,15 @@ My [Claude Code](https://claude.com/code) configuration — agents, skills, hook
 
 | Command | Description |
 |---|---|
-| `/feature` | Full feature workflow: clarify → plan (+ optional architect analysis) → implement → review → tests → Playwright → commit → optional Linear issue |
+| `/feature` | Full feature workflow: clarify → plan (+ optional architect analysis) → implement → simplify → review → verify → Playwright → commit → optional Linear issue |
 | `/feature-linear` | Same as `/feature` but starts from an existing Linear issue and updates it to Done at the end |
 | `/commit` | Follows the project's existing commit style |
-| `/review` | Adversarial code review → fix loop → re-review |
-| `/g-audit-feature` | Playwright E2E test → UX audit report → Linear issues |
-| `/g-create-issue` | Explore codebase → structured Linear issue |
-| `/g-generate-skill` | Turn a session workflow into a reusable skill |
+| `/review` | Adversarial code review → fix loop → re-review → verify |
+| `/verify` | Detects and runs all available checks (lint, types, tests, build) with auto-fix loop (max 3 iterations) |
+| `/wrap-up` | End-of-session compound ritual: synthesize learnings into durable CLAUDE.md and skill rules |
+| `/audit-feature` | Playwright E2E test → UX audit report → Linear issues |
+| `/create-issue` | Explore codebase → structured Linear issue |
+| `/generate-skill` | Turn a session workflow into a reusable skill |
 
 ## Hooks
 
@@ -89,8 +93,8 @@ cd ~/.claude && git pull
 
 ## Design principles
 
-- **Compound engineering** — Every mistake feeds back into CLAUDE.md and skills via self-improvement rules
-- **Verification loops** — The `/review` skill re-reviews after every fix; the simplifier runs tests after changes
+- **Compound engineering** — Micro-compound after every skill (auto-detect learnings → propose CLAUDE.md updates) + `/wrap-up` for end-of-session synthesis
+- **Verification loops** — `/verify` is the single source of truth for all checks; referenced by `/feature`, `/review`, and the simplifier agent
 - **Restricted tools** — Read-only agents are more reliable (reviewer and architect can't modify code)
 - **Hooks as guardrails** — PreToolUse blocks destructive commands before they run; PostToolUse handles formatting
 - **DRY rules** — Shared rules live in `CLAUDE.md`, skills reference them instead of duplicating
