@@ -1,4 +1,4 @@
-Generate a reusable skill (slash command) from the current session's workflow.
+Generate a reusable skill (slash command) from the current session's workflow. Argument: none (uses conversation context).
 
 ## Process
 
@@ -12,8 +12,8 @@ Generate a reusable skill (slash command) from the current session's workflow.
 Ask the user ALL of the following before generating anything:
 
 1. **Scope**: "This skill should be global (available in all projects) or local to this project?"
-   - If global → prefix `g-` (save to `~/.claude/commands/`)
-   - If local → ask for project identifier if unclear (folder name, short alias), prefix `{id}-` (save to `.claude/commands/` in project root)
+   - If global → save to `~/.claude/commands/`
+   - If local → save to `.claude/commands/` in project root
 
 2. **Specificity check**: For each identified step, ask:
    - "I identified these steps: [list]. Are any of these too specific to this session and should be generalized or removed?"
@@ -40,19 +40,19 @@ Write the skill file with this structure:
 _Self-improvement and Execution discipline rules are defined in ~/.claude/CLAUDE.md and apply automatically._
 ```
 
+Do NOT copy universal rules (self-improvement, execution discipline) into generated skills — they are inherited from ~/.claude/CLAUDE.md.
+
 ### Step 4 — Confirm and save
 - Show the full skill content to the user
 - Ask for approval before writing the file
 - Save to the correct location based on scope decision
 
----
+## Rules
 
-## Note on Universal Rules
+- Never generate a skill without showing its full content to the user first (Step 4)
+- Never duplicate an existing skill — check `~/.claude/commands/` and `.claude/commands/` before creating
+- The template format in Step 3 is mandatory — do not improvise a different structure
+- Never add universal rules (self-improvement, execution discipline) into the generated skill body — only include the standard footer line
+- Skill names must be verb or verb-phrases in kebab-case (e.g., `scaffold-module`, not `module-scaffold` or `scaffoldModule`)
 
-Self-improvement and Execution discipline rules are defined in ~/.claude/CLAUDE.md and apply automatically to all skills.
-
-Do NOT copy them into generated skills. Instead, add this line at the end of the `## Rules` section:
-
-```
 _Self-improvement and Execution discipline rules are defined in ~/.claude/CLAUDE.md and apply automatically._
-```
