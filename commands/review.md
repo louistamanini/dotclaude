@@ -34,9 +34,18 @@ Spawn the `reviewer` agent with instructions including:
 
 Let the agent complete its full analysis without interruption.
 
-### Step 4 — Synthesis and actions
+### Step 4 — Sanity-check before presenting
 
-Based on the reviewer agent's report, propose concrete actions:
+Before relaying the agent's verdict, apply these filters on each IMPORTANT/CRITICAL finding:
+
+- **Intentional degradation vs bug**: error-handling paths (`failed()`, `catch`, fallback) are often designed to degrade gracefully on purpose. If the reviewer flags such a path, check the calling code to verify whether the behavior is intentional before presenting it as a bug.
+- **Frequency/volume dependency**: if an issue is only serious under repeated calls (accumulation, loops, performance), ask the user about real-world usage frequency before declaring a blocker. Do not assume worst case.
+
+Downgrade or dismiss findings that do not survive these filters. Mention dismissed findings as non-blocking observations if relevant.
+
+### Step 5 — Synthesis and actions
+
+Based on the reviewer agent's report **after sanity-check**, propose concrete actions:
 
 If **SHIP IT**:
 - "Code is solid. Want me to run /commit?"
@@ -51,7 +60,7 @@ If **BLOCK**:
 - Propose a correction plan ordered by priority
 - Do NOT offer to commit while blockers remain unresolved
 
-### Step 5 — Correction loop (if applicable)
+### Step 6 — Correction loop (if applicable)
 
 If the user accepts corrections:
 1. Apply corrections one by one
