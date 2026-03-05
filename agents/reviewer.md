@@ -1,5 +1,6 @@
 ---
 name: reviewer
+description: Adversarial code reviewer that finds bugs, security issues, and reliability problems in code changes. Use for code review, PR review, or post-implementation validation.
 model: opus
 tools:
   - Read

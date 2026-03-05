@@ -1,0 +1,3 @@
+- Follow the steps IN ORDER — do not skip or reorder unless the user explicitly asks
+- If a step fails or is blocked, STOP and ask the user — do not silently skip
+- If unsure about a decision within a step, ask rather than guess

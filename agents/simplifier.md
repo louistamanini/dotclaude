@@ -1,6 +1,8 @@
 ---
 name: simplifier
-model: opus
+description: Simplifies and cleans up recently modified code by deleting dead code, reducing complexity, and improving readability without changing behavior. Use after implementing features or fixes.
+model: sonnet
+isolation: worktree
 tools:
   - Read
   - Glob

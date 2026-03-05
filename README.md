@@ -9,11 +9,13 @@ My [Claude Code](https://claude.com/code) configuration — agents, skills, hook
 ├── CLAUDE.md              # Global rules (loaded in every session)
 ├── settings.json          # Preferences, hooks, plugins
 ├── agents/
-│   ├── reviewer.md        # Adversarial code review (read-only)
 │   ├── architect.md       # Architecture planning (read-only)
-│   ├── simplifier.md      # Post-work code cleanup
+│   ├── reviewer.md        # Adversarial code review (read-only)
+│   ├── explorer.md        # Codebase research and investigation (read-only)
+│   ├── simplifier.md      # Post-work code cleanup (worktree-isolated)
 │   └── ux-auditor.md      # UX, accessibility (WCAG), SEO audit
 ├── commands/
+│   ├── feature.md         # Full feature pipeline (accepts description or Linear issue)
 │   ├── commit.md          # Standardized commit workflow
 │   ├── review.md          # Code review orchestrating the reviewer agent
 │   ├── verify.md          # Universal verification (lint, types, tests, build)
@@ -21,8 +23,11 @@ My [Claude Code](https://claude.com/code) configuration — agents, skills, hook
 │   ├── audit-feature.md   # E2E Playwright testing → UX report → Linear issues
 │   ├── create-issue.md    # Structured Linear issue from a description
 │   └── generate-skill.md  # Meta-skill: generate new skills from a session
+├── rules/
+│   ├── compound-learning.md   # Auto-detect and propose learnings after every skill
+│   └── execution-discipline.md # Step ordering and failure handling
 └── hooks/
-    ├── guard-destructive.sh # PreToolUse: blocks dangerous commands
+    ├── guard-destructive.sh # PreToolUse: blocks dangerous commands + commit reminder
     └── auto-format.sh       # PostToolUse: auto-format after writes
 ```
 
@@ -30,17 +35,19 @@ My [Claude Code](https://claude.com/code) configuration — agents, skills, hook
 
 | Agent | Role | Tools | Writes code? |
 |---|---|---|---|
-| **reviewer** | Adversarial code review — finds bugs, security issues, missing tests | Read, Glob, Grep, WebSearch | No |
 | **architect** | Architecture planning — proposes approaches with trade-offs | Read, Glob, Grep, WebSearch, WebFetch | No |
-| **simplifier** | Post-work cleanup — removes dead code, simplifies logic | Read, Glob, Grep, Edit, Bash | Yes (behavior-preserving only) |
-| **ux-auditor** | UX, accessibility (WCAG 2.2 AA), SEO audit via Playwright | Read, Glob, Grep, Playwright (navigate, snapshot, screenshot, resize) | No |
+| **reviewer** | Adversarial code review — finds bugs, security issues, missing tests | Read, Glob, Grep, WebSearch | No |
+| **explorer** | Codebase research — traces flows, maps dependencies, answers questions | Read, Glob, Grep, WebSearch, WebFetch | No |
+| **simplifier** | Post-work cleanup — removes dead code, simplifies logic (worktree-isolated) | Read, Glob, Grep, Edit, Bash | Yes (behavior-preserving only) |
+| **ux-auditor** | UX, accessibility (WCAG 2.2 AA), SEO audit via Playwright | Read, Glob, Grep, Playwright | No |
+
+All agents have a `description` field enabling automatic delegation — Claude routes tasks to the right agent without explicit invocation.
 
 ## Skills (slash commands)
 
 | Command | Description |
 |---|---|
-| `/feature` | Full feature workflow: clarify → plan (+ optional architect analysis) → implement → simplify → review → verify → Playwright → commit → optional Linear issue |
-| `/feature-linear` | Same as `/feature` but starts from an existing Linear issue and updates it to Done at the end |
+| `/feature` | Full feature pipeline: accepts a description **or** a Linear issue ID/URL. Clarify (with interview) → plan (+ optional architect) → implement → simplify → review → verify → Playwright → commit → Linear (update or create) |
 | `/commit` | Follows the project's existing commit style |
 | `/review` | Adversarial code review → fix loop → re-review → verify |
 | `/verify` | Detects and runs all available checks (lint, types, tests, build) with auto-fix loop (max 3 iterations) |
@@ -53,8 +60,8 @@ My [Claude Code](https://claude.com/code) configuration — agents, skills, hook
 
 | Event | Script | What it does |
 |---|---|---|
-| `PreToolUse(Bash)` | `guard-destructive.sh` | Blocks `rm -rf /`, `git push --force main`, `git reset --hard`, `DROP TABLE`, `chmod 777` |
-| `PostToolUse(Write\|Edit)` | `auto-format.sh` | Auto-formats with the project's local formatter (prettier, pint, black, gofmt, rustfmt) |
+| `PreToolUse(Bash)` | `guard-destructive.sh` | Blocks `rm -rf /`, `git push --force main`, `git reset --hard`, `DROP TABLE`, `chmod 777`. Warns before `git commit` if `/verify` hasn't been run. |
+| `PostToolUse(Write\|Edit)` | `auto-format.sh` | Auto-formats with the project's local formatter (biome, prettier, pint, black, gofmt, rustfmt) |
 | `Stop` | inline (settings.json) | Desktop notification when Claude finishes |
 | `Notification` | inline (settings.json) | Desktop notification when Claude needs input |
 
@@ -94,10 +101,13 @@ cd ~/.claude && git pull
 ## Design principles
 
 - **Compound engineering** — Micro-compound after every skill (auto-detect learnings → propose CLAUDE.md updates) + `/wrap-up` for end-of-session synthesis
+- **Context preservation** — Read-only agents (architect, reviewer, explorer) report back summaries without polluting the main context window
+- **Worktree isolation** — The simplifier agent runs in its own git worktree, preventing accidental corruption of in-progress work
+- **Auto-delegation** — All agents have descriptive `description` fields, enabling Claude to route tasks automatically without explicit invocation
 - **Verification loops** — `/verify` is the single source of truth for all checks; referenced by `/feature`, `/review`, and the simplifier agent
-- **Restricted tools** — Read-only agents are more reliable (reviewer and architect can't modify code)
 - **Hooks as guardrails** — PreToolUse blocks destructive commands before they run; PostToolUse handles formatting
-- **DRY rules** — Shared rules live in `CLAUDE.md`, skills reference them instead of duplicating
+- **DRY rules** — Shared rules live in `CLAUDE.md` with `@import` for detailed sub-rules; skills reference them instead of duplicating
+- **Single feature pipeline** — `/feature` handles both free-text descriptions and Linear issues, eliminating duplication
 
 ## License
 

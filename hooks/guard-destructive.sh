@@ -65,5 +65,11 @@ if echo "$COMMAND" | grep -qE '>\s*/etc/'; then
   exit 2
 fi
 
+# Reminder: verify before committing
+if echo "$COMMAND" | grep -qE 'git\s+commit'; then
+  echo "REMINDER: Have you run /verify before committing?" >&2
+  # Warning only — does not block
+fi
+
 # Command allowed
 exit 0

@@ -1,5 +1,6 @@
 ---
 name: ux-auditor
+description: Audits web interfaces for accessibility (WCAG 2.2 AA), UX quality, and SEO using source code analysis and Playwright browser testing. Use for UI audits, accessibility checks, or UX reviews.
 model: opus
 tools:
   - Read

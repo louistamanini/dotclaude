@@ -1,5 +1,6 @@
 ---
 name: architect
+description: Analyzes codebase architecture and proposes 2-3 implementation approaches with trade-offs. Use for complex features, new systems, migrations, or when evaluating external libraries.
 model: opus
 tools:
   - Read
