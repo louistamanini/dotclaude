@@ -31,6 +31,12 @@ Before launching the full review:
 Spawn the `reviewer` agent with instructions including:
 - The exact scope to analyze (the git diff command to use)
 - The project context if a CLAUDE.md exists (conventions, patterns)
+- A mandatory security pass covering at minimum:
+  - Injection vectors (SQL, command, XSS, template injection)
+  - Authentication and authorization flaws (missing auth checks, IDOR)
+  - Secrets and credentials hardcoded in source
+  - Unsafe deserialization or file operations
+  - Exposed sensitive data in logs, errors, or API responses
 
 Let the agent complete its full analysis without interruption.
 
