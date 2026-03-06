@@ -25,6 +25,14 @@ if [ "$PROJECT_DIR" = "/" ]; then
   exit 0
 fi
 
+# Blade templates (must check before EXT — ${FILE##*.} only returns "php")
+if [[ "$FILE" == *.blade.php ]]; then
+  if [ -f "$PROJECT_DIR/node_modules/.bin/blade-formatter" ]; then
+    "$PROJECT_DIR/node_modules/.bin/blade-formatter" --write "$FILE" 2>/dev/null
+  fi
+  exit 0
+fi
+
 # Determine the file extension
 EXT="${FILE##*.}"
 
@@ -48,13 +56,6 @@ case "$EXT" in
       "$PROJECT_DIR/vendor/bin/pint" "$FILE" 2>/dev/null
     elif [ -f "$PROJECT_DIR/vendor/bin/php-cs-fixer" ]; then
       "$PROJECT_DIR/vendor/bin/php-cs-fixer" fix "$FILE" --quiet 2>/dev/null
-    fi
-    ;;
-
-  # Blade templates
-  blade.php)
-    if [ -f "$PROJECT_DIR/node_modules/.bin/blade-formatter" ]; then
-      "$PROJECT_DIR/node_modules/.bin/blade-formatter" --write "$FILE" 2>/dev/null
     fi
     ;;
 
