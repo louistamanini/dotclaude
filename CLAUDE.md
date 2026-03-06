@@ -10,6 +10,9 @@ These rules apply to ALL skills (slash commands) without exception.
 ### Execution discipline
 @~/.claude/rules/execution-discipline.md
 
+### Skill creation
+- Prefer `/generate-skill` for creating new skills — consult it for template structure even when designing from scratch
+
 ## Verification
 
 - After modifying code, run verification if a test runner or linter is available — the full process is defined in `~/.claude/commands/verify.md`
