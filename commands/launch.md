@@ -177,9 +177,34 @@ Reference specific patterns from the chosen stack if relevant.]
 
 4. **Order matters**: create tasks in implementation order within each milestone
 
-5. **Track progress**: keep a running list of created task IDs. If a creation fails after retry, log the failed task title and continue with the remaining ones. Include both created and failed tasks in the final report (Step 7).
+5. **Track progress**: keep a running list of created task IDs. If a creation fails after retry, log the failed task title and continue with the remaining ones. Include both created and failed tasks in the final report (Step 8).
 
-### Step 6 — Bootstrap the project [ASK]
+### Step 6 — Self-review tasks
+
+Before moving on, re-read every task just created and check each one against these criteria:
+
+| Criteria | Fail if... |
+|---|---|
+| **Too large** | The task touches more than 3-4 files or covers multiple unrelated concerns — split it |
+| **Too vague** | The objective or requirements would leave a dev guessing what "done" means — sharpen it |
+| **Too coupled** | The task can only be understood by reading another task — make it self-contained |
+| **Too many requirements** | More than 5 requirements — the task is doing too much, split it |
+| **Missing acceptance criteria** | No way to objectively verify completion — add criteria |
+| **Wrong granularity** | Could reasonably be done in one focused session (~1-2h of dev work) — if not, split it |
+
+For each task that fails a criterion:
+1. Explain which criterion failed and why
+2. Propose the fix (split, rewrite, merge)
+3. Apply the fix on Linear (update via `save_issue`, or create new split tasks + archive the original)
+
+Present a summary of adjustments made:
+```
+Task review:
+- X/Y tasks passed as-is
+- Z tasks adjusted (split: N, rewritten: N, merged: N)
+```
+
+### Step 7 — Bootstrap the project [ASK]
 
 Ask: "Do you want to bootstrap the project now? (init repo, install deps, base structure)"
 
@@ -196,7 +221,7 @@ Ask: "Do you want to bootstrap the project now? (init repo, install deps, base s
 - Create a PROJECT.md in the project directory with the full plan (Vision, Stack, Architecture, Milestones)
 - This serves as a reference for when the user starts later
 
-### Step 7 — Report
+### Step 8 — Report
 
 Display the final summary:
 

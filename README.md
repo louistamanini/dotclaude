@@ -21,6 +21,7 @@ My [Claude Code](https://claude.com/code) configuration — agents, skills, hook
 │   ├── verify.md          # Universal verification (lint, types, tests, build)
 │   ├── wrap-up.md         # End-of-session compound learning ritual
 │   ├── audit-feature.md   # E2E Playwright testing → UX report → Linear issues
+│   ├── launch.md          # Project kickoff: idea → stack → architecture → Linear plan
 │   ├── create-issue.md    # Structured Linear issue from a description
 │   └── generate-skill.md  # Meta-skill: generate new skills from a session
 ├── rules/
@@ -47,6 +48,7 @@ All agents have a `description` field enabling automatic delegation — Claude r
 
 | Command | Description |
 |---|---|
+| `/launch` | Project kickoff: interview idea → research stack (architect agent + web) → design architecture → create Linear milestones & tasks (senior dev briefs) → self-review tasks → optional bootstrap |
 | `/feature` | Full feature pipeline: accepts a description **or** a Linear issue ID/URL. Clarify (with interview) → plan (+ optional architect) → implement → simplify → review → verify → Playwright → commit → Linear (update or create) |
 | `/commit` | Follows the project's existing commit style |
 | `/review` | Adversarial code review → fix loop → re-review → verify |
