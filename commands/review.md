@@ -83,6 +83,6 @@ If the user accepts corrections:
 
 ### Verification loop
 - After corrections, ALWAYS re-run a review. This is the feedback loop — a correction can introduce a new issue.
-- After corrections, read and follow `~/.claude/commands/verify.md` to run all checks and confirm nothing is broken.
+- Do NOT run verify inside the review loop — the caller (e.g., /feature Step 7) handles verification separately to avoid double runs.
 
 _Self-improvement and Execution discipline rules are defined in ~/.claude/CLAUDE.md and apply automatically._
