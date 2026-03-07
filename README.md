@@ -86,11 +86,19 @@ cd ~/.claude
 git init
 git remote add origin git@github.com:louistamanini/dotclaude.git
 git fetch origin
-git reset origin/main    # set index to main without touching existing files
-git checkout .           # restore tracked files from the repo
-git branch -M main       # rename branch to main
+git branch -M main
+git reset origin/main
+git checkout .
 git branch -u origin/main
 ```
+
+**What each step does:**
+
+1. `git init` + `git remote add` + `git fetch` — set up the repo and download its history
+2. `git branch -M main` — rename the local branch to `main` (matches the remote)
+3. `git reset origin/main` — point the branch at the latest remote commit and update the index (working directory is untouched)
+4. **`git checkout .`** — restore all tracked files from the index to disk. **Don't skip this** — without it, every repo file appears as "deleted"
+5. `git branch -u origin/main` — track the remote so `git pull` works
 
 The `.gitignore` excludes all local files (`.credentials.json`, `settings.json`, `cache/`, `projects/`, etc.), so nothing is overwritten.
 
